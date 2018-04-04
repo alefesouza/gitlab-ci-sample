@@ -1,0 +1,36 @@
+image: alefesouza/php7-laravel-node-yarn
+
+before_script:
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+cache:
+  paths:
+    - node_modules/
+    - vendor/
+
+stages:
+  - test
+  - deploy
+
+unit_test:
+  stage: test
+  script:
+    - composer install
+    - yarn
+    - composer test
+    - yarn test
+
+deploy_production:
+  stage: deploy
+  environment:
+    name: production
+    # Change it to the URL of your application
+    url: http://gitlab-ci.aloogle.net/
+  only:
+    - master
+  script:
+    - ssh user@host -p port 'bash -s' < ./build/deploy.sh

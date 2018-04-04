@@ -1,0 +1,15 @@
+{
+  "name": "alefesouza/gitlab-ci-sample",
+  "description": "Very simple continuous deploy application with GitLab CI.",
+  "type": "project",
+  "scripts": {
+    "test": "phpunit"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7"
+  },
+  "authors": [{
+    "name": "Alefe Souza",
+    "email": "contact@alefesouza.com"
+  }]
+}
