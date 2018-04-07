@@ -33,4 +33,7 @@ deploy_production:
   only:
     - master
   script:
-    - ssh user@host -p port 'bash -s' < ./build/deploy.sh
+    # Export CI_COMMIT_SHA before loading the file
+    # to have access to it, I've tried other ways
+    # but only this worked.
+    - ssh user@host -p port "export CI_COMMIT_SHA=$CI_COMMIT_SHA && bash -s" < ./build/deploy.sh

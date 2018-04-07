@@ -8,6 +8,8 @@ git clone git@github.com:alefesouza/gitlab-ci-sample.git $NEW_RELEASE_DIR
 
 cd $NEW_RELEASE_DIR
 
+git reset --hard $CI_COMMIT_SHA
+
 composer install
 
 ln -nfs $NEW_RELEASE_DIR "$DEPLOY_PATH/current"
